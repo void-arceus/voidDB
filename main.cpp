@@ -10,10 +10,21 @@
 #include <vector>
 
 std::unordered_map<std::string, std::string> data;
-std::set<std::string> methods = {"set", "get", "delete", "--help", "exit"};
+std::set<std::string> methods = {"set",    "get",  "delete",
+                                 "--help", "exit", "keys"};
 
 void displayHelp() {
   std::cout << "You've reached the help center. Be Patient!\n";
+}
+
+void getAllKeys() {
+  if (data.empty()) {
+    std::cout << "No keys found\n";
+    return;
+  }
+  for (auto &[key, value] : data) {
+    std::cout << key << "\n";
+  }
 }
 
 void setData(std::string &key, std::string &value) {
@@ -60,7 +71,6 @@ void handleInput(bool &flag) {
   std::vector<std::string> inputStream;
   std::string currWord;
   char ch;
-
   while (input.get(ch)) {
     if ((int)inputStream.size() == 2) {
       currWord += ch;
@@ -108,6 +118,8 @@ void handleInput(bool &flag) {
       flag = true;
     } else if (method == "--help") {
       displayHelp();
+    } else if (method == "keys") {
+      getAllKeys();
     } else {
       std::cout << "Invalid method\n";
     }
