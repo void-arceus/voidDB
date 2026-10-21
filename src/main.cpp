@@ -5,7 +5,7 @@
 #include "../include/db/input.hpp"
 
 int main() {
-  input();
+    input();
 
-  return 0;
+    return 0;
 }

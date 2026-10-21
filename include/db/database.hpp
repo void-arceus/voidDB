@@ -5,24 +5,25 @@
 #include <string>
 #include <vector>
 
-typedef struct {
-  std::string key;
-  std::string value;
-  std::string timeStamp;
-  bool isDeleted;
-} memTableEntry;
+struct memTableEntry {
+    std::string key;
+    std::string value;
+    std::string timeStamp;
+    bool isDeleted;
+    memTableEntry(std::string key, std::string value, std::string timeStamp, bool isDeleted) : key(key), value(value), timeStamp(timeStamp), isDeleted(isDeleted) {};
+};
 
-typedef struct {
-  std::vector<memTableEntry> entries;
-  int size;
-} memTable;
+struct memTable {
+    std::vector<memTableEntry *> entries;
+    int size;
+    memTable() : size(0) {};
+};
 
-inline const std::set<std::string> methods = {"set",  "get",    "delete",
-                                              "keys", "--help", "exit"};
+inline const std::set<std::string> methods = {"set", "get", "delete", "keys", "--help", "exit"};
 
-void setData(std::string key, std::string value);
-void getData(std::string key);
-void deleteData(std::string key);
+void setData(std::string &key, std::string &value);
+void getData(std::string &key);
+void deleteData(std::string &key);
 void getKeys();
 
 #endif
