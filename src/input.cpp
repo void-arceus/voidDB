@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../include/db/database.hpp"
-#include "../include/db/input.hpp"
+#include "../include/input.hpp"
 
 void getHelp() { std::cout << "Will display methods and their usage here...\n"; }
 

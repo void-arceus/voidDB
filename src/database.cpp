@@ -1,5 +1,4 @@
 #include "../include/db/database.hpp"
-
 #include <ctime>
 #include <iostream>
 #include <stdexcept>
