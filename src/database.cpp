@@ -1,19 +1,11 @@
 #include "../include/db/database.hpp"
+#include "../include/wal.hpp"
 #include <ctime>
 #include <iostream>
-#include <stdexcept>
 
 memTable *Table = new memTable();
 
-void setData(std::string &key, std::string &value) {
-    if (key == "") {
-        std::cout << "key not provided\n";
-        return;
-    }
-    if (value == "") {
-        std::cout << "value not provided\n";
-        return;
-    }
+void setData(const std::string &key, const std::string &value) {
     std::vector<memTableEntry *> &entries = Table->entries;
     for (auto &entry : entries) {
         if (entry->key == key) {
@@ -29,13 +21,15 @@ void setData(std::string &key, std::string &value) {
         std::string timeString = std::ctime(&currentTime);
         memTableEntry *newEntry = new memTableEntry(key, value, timeString, false);
         Table->entries.push_back(newEntry);
+        const std::string method = "set";
+        writeToWAL(method, key, value, "add", true);
     } catch (const std::runtime_error &e) {
         std::cerr << e.what() << "\n";
     }
     std::cout << "Ok\n";
 }
 
-void getData(std::string &key) {
+void getData(const std::string &key) {
     std::vector<memTableEntry *> &entries = Table->entries;
     for (auto &entry : entries) {
         if (entry->key == key && entry->isDeleted == false) {
@@ -46,11 +40,13 @@ void getData(std::string &key) {
     std::cout << "key not found\n";
 }
 
-void deleteData(std::string &key) {
+void deleteData(const std::string &key) {
     std::vector<memTableEntry *> &entries = Table->entries;
     for (auto &entry : entries) {
         if (entry->key == key && entry->isDeleted == false) {
             entry->isDeleted = true;
+            const std::string method = "delete", value = "";
+            writeToWAL(method, key, value, "add", true);
             std::cout << "Ok\n";
             return;
         }

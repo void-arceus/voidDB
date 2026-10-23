@@ -2,14 +2,10 @@
   author: void_arceus
 */
 
-// #include "../include/input.hpp"
-#include "../include/wal.hpp"
-#include <iostream>
+#include "../include/input.hpp"
 
 int main() {
-    // input();
-    std::cout << "here\n";
-    writeToWAL();
+    input();
 
     return 0;
 }
