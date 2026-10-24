@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef DATABASE_H
 #define DATABASE_H
 
@@ -21,9 +23,10 @@ struct memTable {
 
 inline const std::set<std::string> methods = {"set", "get", "delete", "keys", "--help", "exit"};
 
-void setData(std::string &key, std::string &value);
-void getData(std::string &key);
-void deleteData(std::string &key);
+void setData(const std::string &key, const std::string &value, bool loadingData);
+void getData(const std::string &key);
+void deleteData(const std::string &key, bool loadingData);
+void loadData(std::vector<std::string> &inputBuffer);
 void getKeys();
 
 #endif

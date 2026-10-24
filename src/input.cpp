@@ -64,6 +64,8 @@ void handleInput(bool &flag) {
             flag = false;
         } else if (method == "keys") {
             getKeys();
+        } else {
+            std::cerr << "Error: missing key" << std::endl;
         }
         return;
     }
@@ -78,7 +80,7 @@ void handleInput(bool &flag) {
         if (method == "get") {
             getData(key);
         } else if (method == "delete") {
-            deleteData(key);
+            deleteData(key, false);
         } else if (method == "set") {
             std::cout << "error: value not provided\n";
         }
@@ -92,7 +94,7 @@ void handleInput(bool &flag) {
             return;
         }
         if (method == "set") {
-            setData(key, value);
+            setData(key, value, false);
         }
     }
 }
